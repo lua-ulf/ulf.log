@@ -12,9 +12,11 @@ local Defaults = require("ulf.log.defaults")
 local Config = {}
 M.Config = Config
 
----@class ulf.log.config.Config: ulf.log.config.ConfigOptionsBase
+---@class ulf.log.config.Config
 ---@field logger {[string]:ulf.log.config.Logger}
+---@field formatter ulf.log.config.FormatterOptions
 ---@field writer ulf.log.config.LogWriters
+---@field global ulf.log.config.GlobalConfigOptions
 Config = setmetatable(Config, {
 	__call = function(t, ...)
 		return t:new(...)
@@ -28,13 +30,8 @@ Config = setmetatable(Config, {
 function Config:new(name, config)
 	local obj = {}
 
-	---@type ulf.log.config.Logger[]
-	-- local conf_logger = config.logger
-
-	-- config.logger = nil
 	---@type ulf.log.config.Config
 	local conf = tbl_deep_extend("force", Defaults, config)
-	-- P(conf_logger, config.logger)
 
 	---@type {[string]:ulf.log.config.Logger}
 	obj.logger = {}
@@ -56,10 +53,8 @@ function Config:new(name, config)
 	end
 	obj.logger.default = tbl_deep_extend("force", {}, Defaults.logger)
 
-	obj.default_writer = conf.default_writer
 	obj.writer = deepcopy(conf.writer)
 	obj.formatter = deepcopy(conf.formatter)
-	obj.format = deepcopy(conf.format)
 	obj.global = deepcopy(conf.global)
 	if obj.global.default_logger == nil then
 		obj.global.default_logger = obj.logger[1].name
@@ -108,12 +103,11 @@ function Config.reindex(self)
 					---@type integer
 					level = self.writer[self.global.default_writer].level,
 					enabled = true,
-					async = self.writer[self.global.default_writer].async,
 				},
 			}
 		else
 			for writer_name, writer_config in pairs(logger.writer) do
-				self.logger[i].writer[writer_name].async = self.writer[writer_name].async
+				-- self.logger[i].writer[writer_name].async = self.writer[writer_name].async
 				if type(writer_config.enabled) ~= "boolean" then
 					---@type boolean
 					self.logger[i].writer[writer_name].enabled = true
@@ -121,12 +115,12 @@ function Config.reindex(self)
 			end
 		end
 
-		ConfigAccessors[logger.name] = logger
-		if #logger.name > max_len then
-			max_len = #logger.name
-		end
+		-- ConfigAccessors[logger.name] = logger
+		-- if #logger.name > max_len then
+		-- 	max_len = #logger.name
+		-- end
 	end
-	self.format.logger.name_maxlen = max_len
+	-- self.format.logger.name_maxlen = max_len
 end
 
 return M

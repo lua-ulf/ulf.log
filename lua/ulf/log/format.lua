@@ -7,7 +7,7 @@ local trim = log_util.trim
 ---@type ulf.log.Inspect
 local Inspect = require("ulf.log.inspect")
 
----@alias ulf.log.record_column_formatters {[string]:fun(rec:ulf.log.Record,opts:ulf.log.FormatterOptions?):string}
+---@alias ulf.log.record_column_formatters {[string]:fun(rec:ulf.log.Record,opts:ulf.log.config.FormatterOptions?):string}
 ---@alias ulf.log.record_line_formatter fun(rec:ulf.log.Record,formatter:ulf.log.Formatter,opts:ulf.log.format.exports?):string
 ---
 ---@class ulf.log.Formatter
@@ -73,7 +73,7 @@ M.formatter.column.debug_info = function(rec)
 	return string.format("{ %s }", rec.debug_info.short_src)
 end
 
----@alias ulf.log.format_line_opts {field:ulf.log.RecordFieldOptions,formatter:ulf.log.FormatterOptions}
+---@alias ulf.log.format_line_opts {field:ulf.log.RecordFieldOptions,formatter:ulf.log.config.FormatterOptions}
 ---comment
 ---@param rec ulf.log.Record
 ---@param formatter ulf.log.Formatter

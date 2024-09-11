@@ -19,7 +19,7 @@ local Severity = require("ulf.log.severity")
 
 ---@class ulf.log.config.Logger
 ---@field icon string
----@field writer? table<string,{level:integer,enabled:boolean}>
+---@field writer? {[string]:{level:integer,enabled:boolean}}
 ---@field name string
 ---@field enabled boolean
 
@@ -36,7 +36,7 @@ local options
 ---@field default_writer ulf.log.config.LogWriterBase
 ---@field writer ulf.log.config.LogWriters
 ---@field format? {logger:{name_maxlen:number}}
----@field formatter? ulf.log.FormatterOptions
+---@field formatter? ulf.log.config.FormatterOptions
 
 ---@class ulf.log.config.ConfigOptionsSetup:ulf.log.config.ConfigOptionsBase
 
@@ -53,22 +53,15 @@ local defaults = {
 			-- end,
 			enabled = true,
 			level = Severity.levels.DEBUG,
-			async = false,
 			leave_fd_open = false,
 		},
 
 		stdout = {
 			enabled = true,
 			level = Severity.levels.DEBUG,
-			async = false,
 		},
 
 		default = "stdout",
-	},
-	format = {
-		logger = {
-			name_maxlen = 5,
-		},
 	},
 }
 
@@ -77,7 +70,7 @@ defaults.global = {
 	default_logger = "default",
 	default_writer = "stdout",
 }
----@class ulf.log.FormatterOptions
+---@class ulf.log.config.FormatterOptions
 defaults.formatter = {
 	line = {
 		app_name_maxlen = 10,

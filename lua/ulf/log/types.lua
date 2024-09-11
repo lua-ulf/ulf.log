@@ -4,7 +4,7 @@
 ---@field write fun(self:ulf.log.IWriter,context:ulf.log.Context,level:integer,data:ulf.log.Record)
 ---@field new fun(logger:ulf.log.Logger):ulf.log.IWriter
 
----@class ulf.Logger
+---@class ulf.ILogger
 ---@field trace fun(...)
 ---@field debug fun(...)
 ---@field info fun(...)
@@ -30,3 +30,13 @@
 ---@field short_src string
 ---@field source string
 ---@field what string
+---
+---
+---@class ulf.ILoggerContextOptions
+---@field name string
+---@field enabled boolean
+
+---
+---@class ulf.ILogManager:ulf.ILogger
+---@field default_logger fun():ulf.ILogger
+---@field get fun(name:string, context:ulf.ILoggerContextOptions?):ulf.ILogger

@@ -90,7 +90,6 @@ describe("#ulf", function()
 						LogManager2.config.writer.fs.logfile = nil
 
 						local wanted = {
-							async = false,
 							enabled = true,
 							leave_fd_open = false,
 							level = 1,
@@ -116,12 +115,10 @@ describe("#ulf", function()
 					name = "testapp1",
 					writer = {
 						fs = {
-							async = false,
 							enabled = true,
 							level = 1,
 						},
 						stdout = {
-							async = false,
 							enabled = true,
 							level = 1,
 						},
