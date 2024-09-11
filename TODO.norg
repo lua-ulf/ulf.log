@@ -1,0 +1,60 @@
+* Loom Todo
+
+  Below is a list of all todos
+
+** apipe
+
+   apipe is based on lazy.nvim by folke. It is used to create asynchronous
+   pipelines for installing, updating, building and publishing dependencies
+
+*** ULF
+
+   ULF is a unified Lua libraray which runs on luajit and Neovim. It is
+   usefull for projects which do not necessarily depend on Neovim.
+
+    - ( ) _integrate ULF_
+
+    -- ( ) provide ulf.async 
+           ulf.async provides common function and objects for asynchronous programming.
+           It also provides replacement funcs for *vim.schedule*, *vim.schedule_wrap* and *vim.wait*
+    --- ( ) integrate apipe.async (task scheduler following async/await pattern)
+
+    -- ( ) provide ulf.vim 
+    --- ( ) complete ulf.vim.autocmd
+
+*** Types 
+
+    In order to automate code updates we need to fetch code from the
+    Neovim Lua library and integrate it to ULF.
+
+    - ( ) ulf.types
+      - ( ) refactor directory structure so that it is easy to add new types
+      - ( ) provide central config for the types module
+      - ( ) read https://github.com/Bilal2453/luvit-meta to get some ideas
+
+*** Logging 
+
+    - ( ) ulf.log
+    -- ( ) integrate loggy
+
+*** Tasks
+    
+    - ( ) create git subtree tasks
+    - ( ) create luarocks tasks
+    - ( ) refactor commands 
+      - commands are the entrypoint for running a pipeline
+    - ( ) cjson options from kong
+      - The kong project has a tool where you can see who to setup cjson to parse arrays correctly.
+    - ( ) Evaluate lazy.lua as config file
+      - lazy.lua is a file where you can add local plugins. Maby we could use this mechanism to load packages.
+    - ( ) remove fragments
+
+
+** Loom
+   - ( ) refactor cliargs commands
+    - commands should be generated and read from apipe
+   
+     
+
+
+

@@ -1,0 +1,50 @@
+return {
+	_all = {
+		coverage = false,
+		lpath = "lua/?.lua;lua/?/init.lua",
+		pattern = "spec%.lua$",
+		-- lua = "luajit",
+		ROOT = { "spec/" },
+	},
+	default = {
+		tags = {
+			"tests",
+			"unit",
+			"integration",
+			"ulf",
+			"ulf.log",
+		},
+		output = "htest",
+		verbose = true,
+		-- ["exclude-pattern"] = "sum_spec", -- do not run spec files inside fixture
+		-- helper = "spec.util.test_env",
+		-- ["auto-insulate"] = false,
+		ROOT = { "spec/tests" },
+	},
+	tests = {
+		tags = { "tests", "unit", "integration" },
+		ROOT = { "spec/tests" },
+		verbose = true,
+	},
+	integration = {
+		tags = "integration",
+		ROOT = { "spec/tests" },
+		verbose = true,
+	},
+	unit = {
+		tags = "unit",
+		ROOT = { "spec/tests" },
+		verbose = true,
+	},
+
+	["ulf"] = {
+		tags = "ulf",
+		ROOT = { "spec/tests" },
+		verbose = true,
+	},
+	["ulf.log"] = {
+		tags = "ulf.log",
+		ROOT = { "spec/tests" },
+		verbose = true,
+	},
+}

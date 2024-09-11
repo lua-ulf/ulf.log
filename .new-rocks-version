@@ -1,0 +1,6 @@
+#!/bin/bash
+current_rocks=$(ls ulf.log-?*.?*.?*-?*.rockspec)
+
+source "${TARGET_DIR}/bin/activate" && eval "$(luarocks path)" && luarocks new_version "$current_rocks" && rm -f "$current_rocks"
+
+exit 0

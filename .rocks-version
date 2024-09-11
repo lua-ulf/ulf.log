@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Find the latest version of the rockspec file
+current_rocks=$(ls ulf.log-?*.?*.?*-?*.rockspec 2>/dev/null | sort -V | tail -n 1)
+
+# Check if the file exists
+if [[ -z "$current_rocks" ]]; then
+  echo "Error: No rockspec file found matching the pattern."
+  exit 1
+fi
+
+# Extract version or revision based on the input argument
+if [[ "$1" == "ver" ]]; then
+  if [[ "$current_rocks" =~ ^ulf\.log-([0-9]+\.[0-9]+\.[0-9]+)-([0-9]+)\.rockspec$ ]]; then
+    export ROCKS_PACKAGE_VERSION=${BASH_REMATCH[1]}
+    echo "$ROCKS_PACKAGE_VERSION"
+  else
+    echo "Error: File name does not match the expected pattern."
+    exit 1
+  fi
+elif [[ "$1" == "rev" ]]; then
+  if [[ "$current_rocks" =~ ^ulf\.log-([0-9]+\.[0-9]+\.[0-9]+)-([0-9]+)\.rockspec$ ]]; then
+    export ROCKS_PACKAGE_REVISION=${BASH_REMATCH[2]}
+    echo "$ROCKS_PACKAGE_REVISION"
+  else
+    echo "Error: File name does not match the expected pattern."
+    exit 1
+  fi
+else
+  echo "Usage: $0 {ver|rev}"
+  exit 1
+fi
