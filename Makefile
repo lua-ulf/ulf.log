@@ -90,6 +90,16 @@ new-rocks-version:
 rocks-version: 
 	$(info $(ROCKS_PACKAGE_VERSION)-$(ROCKS_PACKAGE_REVISION))
 
+pack:
+	$(HEREROCKS_ACTIVE) && eval $$(luarocks path) && \
+		luarocks pack ulf.log-$(ROCKS_PACKAGE_VERSION)-$(ROCKS_PACKAGE_REVISION).rockspec "$(ROCKS_PACKAGE_VERSION)-$(ROCKS_PACKAGE_REVISION)" 
+
+publish:
+	$(HEREROCKS_ACTIVE) && eval $$(luarocks path) && \
+		luarocks upload ulf.log-$(ROCKS_PACKAGE_VERSION)-$(ROCKS_PACKAGE_REVISION).rockspec ulf.log--$(ROCKS_PACKAGE_VERSION)-$(ROCKS_PACKAGE_REVISION).src.rock  --api-key=$(LUAROCKS_API_KEY)
+
+
+
 $(COVERAGE_DIR):
 	mkdir $(COVERAGE_DIR)
 
