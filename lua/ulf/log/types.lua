@@ -1,7 +1,7 @@
 ---@meta
 ---
 ---@class ulf.log.IWriter
----@field write fun(self:ulf.log.IWriter,context:ulf.log.Context,level:integer,data:ulf.log.Record)
+---@field write fun(self:ulf.log.IWriter,context:ulf.log.Context,severity:ulf.log.SeverityLevelType,data:ulf.log.Record)
 ---@field new fun(logger:ulf.log.Logger):ulf.log.IWriter
 
 ---@class ulf.ILogger

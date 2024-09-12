@@ -72,12 +72,12 @@ function M.is_log_method_name(s)
 end
 
 ---@param context ulf.log.Context
----@param level integer
+---@param severity ulf.log.SeverityLevelType
 ---@param line string
 ---@return string
-function M.colorize(context, level, line)
-	local color_name = Severity.colors[level]
-	return Term.color(line, color_name)
+function M.colorize(context, severity, line)
+	-- local color_name = Severity.colors[severity]
+	return Term.color(line, severity.color)
 end
 
 ---@param s string

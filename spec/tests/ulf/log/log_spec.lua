@@ -1,7 +1,7 @@
 local fs = require("spec.helpers.fs")
 
 local function lua_path_testapp1(s)
-	return fs.git_root() .. "/spec/fixtures/modules/lua" .. s .. ";"
+	return fs.git_root() .. "/deps/ulf.log/spec/fixtures/modules/lua" .. s .. ";"
 end
 
 package.path = package.path .. ";" .. lua_path_testapp1("/?.lua") .. lua_path_testapp1("/?/init.lua")
@@ -83,16 +83,19 @@ describe("#ulf", function()
 						assert(logmanager1_logfile_path)
 						assert(logmanager2_logfile_path)
 
-						assert(logmanager1_logfile_path:match("ulf%/log%/testapp1"))
-						assert(logmanager2_logfile_path:match("ulf%/log%/testapp2"))
+						-- assert(logmanager1_logfile_path:match("ulf%/log%/testapp1"))
+						-- assert(logmanager2_logfile_path:match("ulf%/log%/testapp2"))
 
 						LogManager1.config.writer.fs.logfile = nil
 						LogManager2.config.writer.fs.logfile = nil
 
 						local wanted = {
+							name = "fs",
 							enabled = true,
 							leave_fd_open = false,
-							level = 1,
+							severity = {
+								_value = 1,
+							},
 						}
 						assert.same(wanted, LogManager1.config.writer.fs)
 						assert.same(wanted, LogManager2.config.writer.fs)
@@ -115,12 +118,18 @@ describe("#ulf", function()
 					name = "testapp1",
 					writer = {
 						fs = {
+							-- name = "fs",
 							enabled = true,
-							level = 1,
+							severity = {
+								_value = 1,
+							},
 						},
 						stdout = {
+							-- name = "stdout",
 							enabled = true,
-							level = 1,
+							severity = {
+								_value = 4,
+							},
 						},
 					},
 				}

@@ -37,7 +37,7 @@ end
 
 ---@param logger ulf.log.Logger
 ---@param context ulf.log.Context
----@param severity integer
+---@param severity ulf.log.SeverityLevelType
 ---@param record ulf.log.Record
 function M.dispatch(logger, context, severity, record)
 	for key, writer_config in pairs(logger.writer) do ---@diagnostic disable-line: no-unknown
@@ -46,7 +46,8 @@ function M.dispatch(logger, context, severity, record)
 		if not w then
 			print(string.format("M.dispatch: skipping invalid writer %s", key))
 		else
-			if severity >= writer_config.level and writer_config.enabled then
+			if logger:channel_accepts_message(key, severity) then
+				-- if severity >= writer_config.level and writer_config.enabled then
 				w:write(context, severity, record)
 			end
 		end

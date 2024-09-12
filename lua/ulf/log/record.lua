@@ -63,6 +63,7 @@ M.Record = Record
 ---@field severity_name? string
 ---@field severity_level? integer
 ---@field severity_icon? string
+---@field severity? ulf.log.SeverityLevelType
 ---@field app_name string
 ---@field logger_name string
 ---@field logger ulf.log.Logger
@@ -80,7 +81,7 @@ M.Record = Record
 ---@field data table[]
 ---@field message string
 ---@field app_name string
----@field severity {name:string,icon:string,level:integer}
+---@field severity? ulf.log.SeverityLevelType
 ---@overload fun(opts:ulf.log.RecordOptions):ulf.log.Record
 Record = setmetatable(Record, {
 	__call = function(t, ...)
@@ -111,11 +112,12 @@ function Record:new(opts)
 	assert(type(opts) == "table", "ulf.log.Record.new opts must be a table")
 	local obj = {
 		timestamp = Timestamp(),
-		severity = {
-			level = opts.severity_level,
-			icon = opts.severity_icon or Severity.icons[opts.severity_level],
-			name = opts.severity_name or Severity.names[opts.severity_level],
-		},
+		-- severity = {
+		-- 	level = opts.severity_level,
+		-- 	icon = opts.severity_icon or Severity.icons[opts.severity_level],
+		-- 	name = opts.severity_name or Severity.names[opts.severity_level],
+		-- },
+		severity = opts.severity,
 		context = opts.context,
 		app_name = opts.logger.app.name,
 		debug_info = opts.debug_info,

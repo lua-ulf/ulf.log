@@ -49,7 +49,7 @@ local Manager = {
 --- loggers
 ---@class ulf.log.Manager
 ---@field name string
----@field config ulf.log.config.ConfigOptions
+---@field config ulf.log.config.Config
 ---@field logger {[string]:ulf.log.Logger}
 ---@overload fun(app:string,config:ulf.log.config.ConfigOptions):ulf.log.Manager
 Manager = setmetatable(Manager, {

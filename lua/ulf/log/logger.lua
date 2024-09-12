@@ -8,6 +8,7 @@ local M = {}
 
 local Util = require("ulf.log.util")
 local Writer = require("ulf.log.writer")
+local Severity = require("ulf.log.severity")
 local Record = require("ulf.log.record").Record
 
 M.inspect = require("ulf.log.inspect")
@@ -16,7 +17,11 @@ local Logger = {}
 M.Logger = Logger
 
 --- Logger provides a logging interface with multiple log writers
----@class ulf.log.Logger:ulf.log.config.Logger
+---@class ulf.log.Logger
+---@field writer {fs:ulf.log.config.LoggerWriterSettings,stdout:ulf.log.config.LoggerWriterSettings}
+---@field enabled boolean
+---@field name string
+---@field icon string
 ---@field app ulf.log.Manager
 ---@overload fun(config:ulf.log.config.Logger):ulf.log.Logger
 Logger = setmetatable(Logger, {
@@ -37,6 +42,27 @@ function Logger.new(app, config)
 	self.enabled = config.enabled
 	self.writer = config.writer
 	return self
+end
+
+--- Tests if channel 'name' accepts a message with a certain level
+--- @param chan_name string
+--- @param severity ulf.log.SeverityLevelType
+function Logger:channel_accepts_message(chan_name, severity)
+	local chan = self.writer[chan_name]
+	if not chan then
+		--- TODO: handle error
+		return false
+	end
+
+	if not chan.enabled then
+		return false
+	end
+
+	if severity.level < chan.severity.dynamic_level then
+		return false
+	end
+
+	return true
 end
 
 function Logger:endpoint(context)
@@ -66,6 +92,9 @@ function Logger:endpoint(context)
 				context.multi_line_output = true
 			end
 
+			---@param severity ulf.log.SeverityLevelType
+			---@param msg string
+			---@param ... any
 			local log_fn = function(severity, msg, ...)
 				---@type ulf.IDebugInfo
 				local info = debug.getinfo(2, "nSl") ---@diagnostic disable-line: assign-type-mismatch
@@ -75,7 +104,7 @@ function Logger:endpoint(context)
 
 				if self.enabled then
 					local record = Record({
-						severity_level = severity,
+						severity = severity,
 						app_name = self.app.name,
 						context = context,
 						logger_name = self.name,
@@ -90,6 +119,9 @@ function Logger:endpoint(context)
 			end
 
 			if method_name == "log" then
+				---@param severity ulf.log.SeverityLevelType
+				---@param msg string
+				---@param ... any
 				return function(severity, msg, ...)
 					return log_fn(severity, msg, ...)
 				end
@@ -97,7 +129,7 @@ function Logger:endpoint(context)
 			local severity = methods[method_name]
 			if type(severity) == "number" then
 				return function(msg, ...)
-					return log_fn(severity, msg, ...)
+					return log_fn(Severity.create_severity_level(severity), msg, ...)
 				end
 			end
 		end,

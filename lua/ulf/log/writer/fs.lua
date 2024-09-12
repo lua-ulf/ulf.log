@@ -77,7 +77,7 @@ function Writer:close_logfile()
 end
 
 ---@param context ulf.log.Context
----@param severity integer
+---@param severity ulf.log.SeverityLevelType
 ---@param record ulf.log.Record
 function Writer:write(context, severity, record)
 	if type(record) ~= "table" then

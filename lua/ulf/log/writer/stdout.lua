@@ -13,7 +13,7 @@ function Writer.new(logger)
 end
 
 ---@param context ulf.log.Context
----@param severity integer
+---@param severity ulf.log.SeverityLevelType
 ---@param record ulf.log.Record
 function Writer:write(context, severity, record)
 	local data = record:line(require("ulf.log.format").formatter)

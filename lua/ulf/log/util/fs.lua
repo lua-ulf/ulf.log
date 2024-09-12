@@ -74,8 +74,12 @@ function M.stdpath(kind, ...)
 	end
 end
 
+---comment
+---@param app_name string
+---@param config ulf.log.config.Config
+---@return string
 function M.logfile_path(app_name, config)
-	return M.joinpath(M.stdpath("data") --[[@as string]], "ulf", "log", app_name)
+	return M.joinpath(M.stdpath("data") --[[@as string]], "ulf", "log", app_name .. ".log")
 end
 
 return M

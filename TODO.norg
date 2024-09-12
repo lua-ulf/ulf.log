@@ -2,12 +2,42 @@
 
   Below is a list of all todos
 
-** general
+** writer (better: `channel`)
+   ___
 
-   General tasks 
+   Writers are used to send log messages to various destinations.
+   The name `writer` is somewhat misleading (see tasks)
 
-*** Config 
 
-    - ( ) ulf.log.config
-    -- ( ) remove old fields and cleanup code
+   - ( ) ulf.log.writer tasks
+   -- ( ) Rename *writer* to *channel* as this reflects the thing more 
+          precisely
+   -- ( ) The terminal channel should be used in every scenario.
+          When the logging code runs inside Neovim provide an adapter
+          to vim.notify. When a busted test runs provide an adapter
+          to the busted event notification.
+
+** Config 
+   ___
+
+   - ( ) ulf.log.config tasks
+   -- (x) remove old fields and cleanup code
+   -- ( ) provide reasonable defaults 
+   --- ( ) Do not set DEBUG level as default.
+
+** Severity 
+   ___
+
+   - ( ) ulf.log.severity tasks
+   --- ( ) use metatable events to compare severity.level
+   --- ( ) Separate the type from presentation. Color, icon, name do not
+           belong to the type. The additional fields are only used in a
+           log record. Create record field which embeds the type.
+
+
+** Documentation 
+   ___
+
+  - ( ) ulf.log.doc tasks
+  -- ( ) I realy like https://github.com/tjdevries/tree-sitter-lua
 

@@ -10,6 +10,7 @@ source = {
 description = {
 	summary = "ulf.log is a logger module for Luajit and Neovim.",
 	detailed = "ulf.log is a logger module for Luajit and Neovim.",
+	labels = { "log", "neovim", "luajit" },
 	homepage = "http://github.com/lua-ulf/ulf.log",
 	license = "MIT",
 }
